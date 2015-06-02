@@ -1,2 +1,0 @@
-Chepurovskiy Dmitry
-Tukh Igor
