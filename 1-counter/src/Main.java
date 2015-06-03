@@ -6,71 +6,75 @@ public class Main {
     static Scanner in;
     static PrintWriter out;
 
-    static int parse (String s){
+    static int parse(String str) {
         int count = 1;
-        for (int i = 0; i < s.length(); i++){
-            if (s.charAt(i) == ' '){
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == ' ') {
                 count++;
             }
         }
+
+        if (str.length() == 0) {
+            return 0;
+        }
+
         return count;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        int input = 0;
-        if (args.length == 0){
-            in = new Scanner(System.in);
-            out = new PrintWriter(System.out);
-        }
-        else{
-            if (args.length == 1){
-                if (args[0].charAt(0) == 'i') {
-                    in = new Scanner(new File(args[0].substring(3)));
-                    out = new PrintWriter(System.out);
-                    input = 1;
+    public static void main(String[] args) throws  FileNotFoundException{
+        boolean input_file = false;
+        boolean output_file = false;
+
+        in = new Scanner(System.in);
+        out = new PrintWriter(System.out);
+
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].charAt(0) == 'i') {
+                try {
+                    in = new Scanner(new File(args[i].substring(3)));
+                } catch (FileNotFoundException e) {
+                    System.out.println("Input file not found!");
                 }
-                else{
-                    in = new Scanner(System.in);
-                    out = new PrintWriter(new File(args[0].substring(3)));
-                }
+                input_file = true;
             }
-            else{
-                input = 1;
-                if (args[0].charAt(0) == 'i') {
-                    in = new Scanner(new File(args[0].substring(3)));
-                    out = new PrintWriter(args[1].substring(3));
-                }
-                else{
-                    in = new Scanner(args[1].substring(3));
-                    out = new PrintWriter(new File(args[0].substring(3)));
-                }
+            if (args[i].charAt(0) == 'o') {
+                out = new PrintWriter(new File(args[i].substring(3)));
+                output_file = true;
             }
         }
-        int ans1 = 0;
-        int ans2 = 0;
-        int ans3 = 0;
-        out.println("number of Lines, nuimber of words, number of symbols");
-        if (input == 1){
-            while (in.hasNext()){
-                ans1++;
-                String s = in.nextLine();
-                ans2 += parse(s);
-                ans3 += s.length();
-            }
+
+        if (!input_file && !output_file) {
+            out.println("Must have new dot line in the end!");
+            out.println("Input:");
+            out.flush();
         }
-        else {
-            String s = "";
-            while (!(s.length() == 1 && s.charAt(0) == '.')) {
-                ans1++;
-                s = in.nextLine();
-                ans2 += parse(s);
-                ans3 += s.length();
-            }
-            ans1 -= 1;
-            ans2 -= 1;
-            ans3 -= 1;
+
+        int lines_number = 0;
+        int words_number = 0;
+        int symbols_number = 0;
+
+        String temp_str = "";
+
+        while ((input_file && in.hasNext()) || (!input_file && (!(temp_str.length() == 1 && temp_str.charAt(0) == '.')))) {
+            lines_number++;
+            temp_str = in.nextLine();
+            words_number += parse(temp_str);
+            symbols_number += temp_str.length();
         }
-        out.println((ans1) + " " + (ans2) + " " + (ans3));
+        if (!input_file) {
+            lines_number--;
+            words_number--;
+            symbols_number--;
+        }
+
+        if (!input_file && !output_file) {
+            out.println();
+            out.println("Output:");
+        }
+
+        out.println("Number of Lines: " + (lines_number));
+        out.println("Number of words: " + (words_number));
+        out.println("Number of symbols: " + (symbols_number));
         out.close();
     }
 }
