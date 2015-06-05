@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tic-Tac-Toe Task 4 Difficult</string>
+    <string name="message_wrong_turn">"You can't set you figure here, because cell isn't empty!"</string>
+    <string name="message_button_ok">Ok</string>
+
+</resources>
