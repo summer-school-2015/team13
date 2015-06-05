@@ -8,14 +8,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements View.OnClickListener {
-    static int sum = 0;
-    static int primeNumber = 0;
+    int sum = 0;
+    int primeNumber = 0;
 
-    static Button button1;
-    static Button button2;
-    static Button button3;
+    Button button1;
+    Button button2;
+    Button button3;
 
-    static TextView textView1;
+    TextView textView1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
